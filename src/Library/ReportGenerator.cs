@@ -60,34 +60,16 @@ namespace Ucu.Poo.PersonExporter
                 this.GeneratePdf(people, outputPath);
                 return true;
             }
-            else if (format == "MARKDOWN")
+           else if (format == "MARKDOWN")
             {
-                this.GenerateMarkDown(people, outputPath);
+                IExport exporter = new MarkdownReportExporter();
+                exporter.Export(people, outputPath);
                 return true;
             }
             else
             {
                 return false;
             }
-        }
-
-        // Escapa caracteres especiales de Markdown en un texto simple.
-        private static string EscapeMarkdown(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return value;
-            }
-
-            string[] charsToEscape = new[] { "|", "*", "_", "`" };
-            string result = value;
-
-            foreach (string c in charsToEscape)
-            {
-                result = result.Replace(c, "\\" + c, StringComparison.Ordinal);
-            }
-
-            return result;
         }
 
         // Genera un archivo HTML con una tabla de personas.
@@ -189,24 +171,6 @@ namespace Ucu.Poo.PersonExporter
             });
 
             document.GeneratePdf(outputPath);
-        }
-
-        // Genera un archivo MarkDown con una tabla básica de personas.
-        private void GenerateMarkDown(IList<Person> people, string outputPath)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("# Person Report");
-            sb.AppendLine();
-            sb.AppendLine("| First Name | Last Name | Age |");
-            sb.AppendLine("|-----------|-----------|-----|");
-
-            foreach (Person person in people)
-            {
-                sb.AppendLine($"| {EscapeMarkdown(person.FirstName)} | {EscapeMarkdown(person.LastName)} | {person.Age} |");
-            }
-
-            string markdown = sb.ToString();
-            File.WriteAllText(outputPath, markdown, Encoding.UTF8);
         }
 
         // Aplica el estilo común de celda para la tabla del PDF.
