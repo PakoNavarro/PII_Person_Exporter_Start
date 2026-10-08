@@ -32,6 +32,7 @@ namespace Ucu.Poo.PersonExporter
             Console.WriteLine("Seleccione el formato de reporte:");
             Console.WriteLine("1 - HTML");
             Console.WriteLine("2 - PDF");
+            Console.WriteLine("3 - MARKDOWN");
             Console.Write("Opción: ");
 
             string option = Console.ReadLine();
@@ -47,6 +48,11 @@ namespace Ucu.Poo.PersonExporter
             {
                 format = "PDF";
                 outputPath = "persons-report.pdf";
+            }
+            else if (option == "3")
+            {
+                format = "MarkDown";
+                outputPath = "person-report.md";
             }
             else
             {
